@@ -1,20 +1,30 @@
-//#ifndef twotest
-//#define twotest
-#pragma once
-#include<string>
-//#include "User_module.h"
-//#include "login_module.cpp"
-// #ifndef TwoStepVerification
-// #define TwoStepVerification
-//#include "login_module.cpp"
+#include "TwoStepVerification.h"
+#include<fstream>
+#include<iostream>
+#include "encrypted.h"
+#include "User_module.h"
 
 
-
-class TwoStepVerification : public User
-{
-    public:
+std::string TwoStepVerification::correct_pin(){
     std::string pin_number;
-    std::string correct_pin();
+    
+        
+
+            std::ifstream database_file;
+            database_file.open("databaseRecord.txt",std::ios::in);
+
+            std::cout<<"Enter pin number in two minutes: "<<std::endl;
+            std::cin>>pin_number;
+
+
+            while(database_file >> user_id >> password >> pin >> imei_no >> location >> mobile_no >> time){
+                if(encrypt(pin_number)==pin){
+                    
+                    return "Successful";
+
+                }
+            }
+            return "False";
+        
 };
 
-//#endif
